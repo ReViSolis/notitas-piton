@@ -1,0 +1,14 @@
+Nombre: we
+Apellidos: tr
+Edad: 123
+Altura: 122
+Telefono: 222222222
+Sexo: Mujer
+
+Nombre: Reyli
+Apellidos: Solis
+Edad: 19
+Altura: 1700
+Telefono: 12555555
+Sexo: Hombre
+
