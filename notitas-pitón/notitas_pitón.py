@@ -1,5 +1,24 @@
 import tkinter as tk
 from tkinter import messagebox
+import re
+
+##defes
+def ValidInt(valor):
+    try:
+        int(valor)
+        return True
+    except ValueError:
+        return False
+def ValidDeci(valor):
+    try:
+        float(valor)
+        return True
+    except ValueError:
+        return False
+def Valid10(valor):
+    return valor.isdigit() and len(valor) == 10
+def ValidText(valor):
+    return bool(re.match("^[a-zA-Z\s]+$", valor))
 
 ##Guardar datos
 def save():
@@ -13,10 +32,18 @@ def save():
         gender = "Hombre"
     elif varGender.get() == 2:
         gender = "Mujer"
-    data = "Nombre: " + names + "\nApellidos: " + Lnames + "\nEdad: " + age + "\nAltura: " + height + "\nTelefono: " + phone + "\nSexo: " + gender
-    with open("datasapitón.txt", "a") as file:
-        file.write(data + "\n\n")
-    messagebox.showinfo("Datos " + "Datos guardados: \n\n", data)
+## validar
+    if (ValidInt(age) and ValidDeci(height) and Valid10(phone) and ValidText(names) and ValidText(Lnames)):
+
+        data = "Nombre: " + names + "\nApellidos: " + Lnames + "\nEdad: " + age + "\nAltura: " + height + "\nTelefono: " + phone + "\nSexo: " + gender
+        with open("datasapitón.txt", "a") as file:
+            file.write(data + "\n\n")
+        messagebox.showinfo("Datos " + "Datos guardados: \n\n", data)
+##limpiar despues de guardar
+        clear()
+    else:
+        messagebox.showerror("ERROR", "ingrsar dato valido en los campos")
+
 ##Borrar datos
 def clear():
     tbname.delete(0, tk.END)
