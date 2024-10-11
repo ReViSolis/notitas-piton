@@ -1,5 +1,49 @@
 import tkinter as tk
 from tkinter import messagebox
+import re
+import mysql.connector as mysqlcausa #para conectar con MySQL
+
+def insertarRegistro(names, Lnames, age, height, phone, gender):
+    try:
+        connnection = mysqlcausa.connect(
+                host = "localhost",
+                port = "3306",
+                user = "root",
+                password = "laluznu7S!",
+                database = "avanzaprogra",
+            )
+        cursor = connnection.cursor()
+        query = "insert into tabla (notname, lastName, age, height, phone, sexo) values (%s, %s, %s, %s, %s, %s)"
+        values = (names, Lnames, age, height, phone, gender)
+        cursor.execute(query, values)
+        connnection.commit()
+        cursor.close()
+        connnection.close()
+        messagebox.showinfo("Datos", "Se guardaó a la base de datos")
+    except mysqlcausa.Error as err:
+        messagebox.showerror("ERROR", f"error fatal, corregirrrrrr!!: {err}") ##aquí quedaste OOOOOOOOOOOOOOOOOOOOOOOOOO
+
+##defes
+def ValidInt(valor):
+    try:
+        int(valor)
+        return True
+    except ValueError:
+        return False
+
+def ValidDeci(valor):
+    try:
+        float(valor)
+        return True
+    except ValueError:
+        return False
+
+def Valid10(valor):
+    return valor.isdigit() and len(valor) == 10
+
+def ValidText(valor):
+    return bool(re.match("^[a-zA-Z\s]+$", valor))
+
 
 ##Guardar datos
 def save():
@@ -13,10 +57,21 @@ def save():
         gender = "Hombre"
     elif varGender.get() == 2:
         gender = "Mujer"
-    data = "Nombre: " + names + "\nApellidos: " + Lnames + "\nEdad: " + age + "\nAltura: " + height + "\nTelefono: " + phone + "\nSexo: " + gender
-    with open("datasapitón.txt", "a") as file:
-        file.write(data + "\n\n")
-    messagebox.showinfo("Datos " + "Datos guardados: \n\n", data)
+#Validar dato
+    if (ValidInt(age) and ValidDeci(height) and Valid10(phone) and ValidText(names) and ValidText(Lnames)):
+
+#Ingrsar datos al database
+        insertarRegistro(names, Lnames, age, height, phone, gender)
+
+        data = "Nombre: " + names + "\nApellidos: " + Lnames + "\nEdad: " + age + "\nAltura: " + height + "\nTelefono: " + phone + "\nSexo: " + gender
+        with open("datasapitón.txt", "a") as file:
+            file.write(data + "\n\n")
+        messagebox.showinfo("Datos " + "Datos guardados: \n\n", data)
+#limpiar después de guardar
+        clear()
+    else:
+        messagebox.showerror("ERROR", "ingrsar dato valido en los campos")
+
 ##Borrar datos
 def clear():
     tbname.delete(0, tk.END)
