@@ -12,3 +12,24 @@ Altura: 1700
 Telefono: 12555555
 Sexo: Hombre
 
+Nombre: reyli
+Apellidos: slosi
+Edad: 19
+Altura: 1.89
+Telefono: 1234567890
+Sexo: Hombre
+
+Nombre: 12
+Apellidos: 
+Edad: 
+Altura: 
+Telefono: 
+Sexo: 
+
+Nombre: re
+Apellidos: so
+Edad: 19
+Altura: 1.67
+Telefono: 1234567890
+Sexo: Hombre
+
